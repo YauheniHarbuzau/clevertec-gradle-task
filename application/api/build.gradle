@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+dependencies {
+    implementation project(':application:core')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+jar {
+    manifest.attributes(
+            'Main-Class': 'ru.clevertec.api.App',
+            'Class-Path': configurations.compileClasspath.collect { it.getName() }.join(' ')
+    )
+    from configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+test.finalizedBy jacocoTestReport
+jacocoTestReport.dependsOn test
