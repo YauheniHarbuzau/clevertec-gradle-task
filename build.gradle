@@ -1,0 +1,16 @@
+plugins {
+    id 'title-plugin'
+}
+
+allprojects {
+    group 'ru.clevertec'
+    version '1.3.5'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+wrapper {
+    gradleVersion '7.5.1'
+}
